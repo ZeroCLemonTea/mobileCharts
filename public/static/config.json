@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "lasttime": "2022-10-21 15:31:39",
+  "author": "周子正",
+  "className": "mobileCharts",
+  "module": [
+    {
+      "classId": "idm.component.mobileCharts.text",
+      "comName": "文本",
+      "className": "IText",
+      "comType": "common",
+      "comLangue": "vue"
+    }
+  ]
+}
