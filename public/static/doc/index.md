@@ -8,4 +8,3 @@ mobileCharts
 ## 版本
 1.0.0
 ## 组件列表
-1. 文本（IText）—idm.componet.mobileCharts.text
