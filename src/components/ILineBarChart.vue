@@ -72,7 +72,7 @@
 import * as echarts from 'echarts';
 const devChartResult =
 {
-  nameList: ['文字长度测试文字长度测试文字长度测试', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  nameList: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   barValueList: [10, 52, 200, 334, 390, 330, 220],
   lineValueList: [20, 80, 40, 60, 50, 20, 10],
 };
