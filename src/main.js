@@ -4,6 +4,10 @@ import { VueRegister } from '@idm-modules/core/regModule/vue';
 import config from '../public/static/config.json';
 //引入图标
 import '@/icons' // icon
+//按需引入 ECharts 图表和组件
+import '@/plugins/echarts';
+//按需引入 Vant 组件
+import '@/plugins/vant';
 
 new VueRegister()
 const requireComponent = require.context(
