@@ -80,6 +80,7 @@ export default {
   name: 'ILineBarChart',
   data() {
     return {
+      pageSizeWidth: 0,
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {
         // chartDataSource: '1',
@@ -126,10 +127,10 @@ export default {
   props: {},
   computed: {
     emptyImageSize() {
-      return this.getScale() * (this.propData.emptyImageSize || 70);
+      return this.getScale(this.pageSizeWidth) * (this.propData.emptyImageSize || 70);
     },
     loadingSize() {
-      return this.getScale() * (this.propData.loadingSize || 24);
+      return this.getScale(this.pageSizeWidth) * (this.propData.loadingSize || 24);
     }
   },
   created() {
@@ -179,8 +180,9 @@ export default {
           this.initData();
           break;
         case 'pageResize':
-          this.convertAttrToStyleObject(messageObject.message);
-          this.drawChart(messageObject.message);
+          this.pageSizeWidth = messageObject.message && messageObject.message.width
+          this.convertAttrToStyleObject();
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });
@@ -204,9 +206,9 @@ export default {
       const width = this.moduleObject.env === 'production' ? window.innerWidth : pageWidth || 414;
       return ((width / base - 1) * (ratio - 1) + 1) * fontSizeRatio;
     },
-    drawChart(pageSize = {}) {
+    drawChart() {
       this.chart.clear();
-      const scale = this.getScale(pageSize.width)
+      const scale = this.getScale(this.pageSizeWidth)
       const nameList = this.getExpressData('data', this.propData.nameField, this.chartData);
       const xAxis = [
         {
@@ -295,7 +297,7 @@ export default {
         legend: {
           show: this.propData.showLegend,
           left: this.propData.legendXPosition,
-          top: this.propData.legendYPosition == 'top' ? this.propData.chartTitle ? scale * ((this.propData.chartTitleFontSize || 16) * 1.4) : 'top' : 'bottom',
+          top: this.propData.legendYPosition == 'top' ? this.propData.chartTitle ? scale * ((this.propData.chartTitleFontSize || 16) + 6) : 'top' : 'bottom',
           textStyle: {
             color:
               this.propData.legendFontColor && this.propData.legendFontColor.hex8
@@ -331,16 +333,17 @@ export default {
         series: this.propData.seriesSet && this.propData.seriesSet.length > 0 ?
         this.propData.seriesSet.map(item => {
           if(item.type === 'bar') {
-            return this.getBarSeries(item, scale)
+            return this.getBarSeries(item)
           } else if (item.type === 'line') {
-            return this.getLineSeries(item, scale)
+            return this.getLineSeries(item)
           }
         }) : []
       };
       console.log(option)
       this.chart.setOption(option);
     },
-    getBarSeries(propData, scale){
+    getBarSeries(propData){
+      const scale = this.getScale(this.pageSizeWidth)
       const valueList = this.getExpressData('data', propData.dataFiled, this.chartData);
       const colorList =
         propData.colorGrad
@@ -384,7 +387,8 @@ export default {
         data: valueList
       }
     },
-    getLineSeries(propData, scale){
+    getLineSeries(propData){
+      const scale = this.getScale(this.pageSizeWidth)
       const valueList = this.getExpressData('data', propData.dataFiled, this.chartData);
       const colorList =
         propData.colorGrad
@@ -541,7 +545,7 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject(pageSize = {}) {
+    convertAttrToStyleObject() {
       const styleObject = {};
       const titleStyleObject = {};
       const innerCardStyleObject = {};
@@ -549,7 +553,7 @@ export default {
       const emptyStyleObject = {};
       const loadingStyleObject = {};
 
-      const scale = this.getScale(pageSize.width);
+      const scale = this.getScale(this.pageSizeWidth);
       styleObject['--i-linebarChart-scale'] = scale;
 
       if (this.propData.bgSize && this.propData.bgSize == 'custom') {

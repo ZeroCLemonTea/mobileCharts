@@ -172,6 +172,7 @@ export default {
   name: 'IPieChart',
   data() {
     return {
+      pageSizeWidth: 0,
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {
         // colorType: 'field',
@@ -207,10 +208,10 @@ export default {
   props: {},
   computed: {
     emptyImageSize() {
-      return this.getScale() * (this.propData.emptyImageSize || 70);
+      return this.getScale(this.pageSizeWidth) * (this.propData.emptyImageSize || 70);
     },
     loadingSize() {
-      return this.getScale() * (this.propData.loadingSize || 24);
+      return this.getScale(this.pageSizeWidth) * (this.propData.loadingSize || 24);
     },
     pickerSelectText() {
       if (this.pickerSelect && this.pickerSelect.value) {
@@ -295,8 +296,9 @@ export default {
           this.initData();
           break;
         case 'pageResize':
-          this.convertAttrToStyleObject(messageObject.message);
-          this.drawChart(messageObject.message);
+          this.pageSizeWidth = messageObject.message && messageObject.message.width
+          this.convertAttrToStyleObject();
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });
@@ -341,16 +343,15 @@ export default {
       });
     },
     labelFormatter({data}) {
-      console.log(data)
       if (this.propData.labelCustomFunction && this.propData.labelCustomFunction[0] && this.propData.labelCustomFunction[0].name) {
         return this.customFormat(this.propData.labelCustomFunction, data)
       }
       console.log(this.getExpressData('data', this.propData.labelField, data))
       return this.getExpressData('data', this.propData.labelField, data)
     },
-    drawChart(pageSize = {}) {
+    drawChart() {
       this.chart.clear();
-      const scale = this.getScale(pageSize.width)
+      const scale = this.getScale(this.pageSizeWidth)
       const legendData = this.chartData?.map(item => item.name);
       const option = {
         color: this.colors,
@@ -593,7 +594,7 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject(pageSize = {}) {
+    convertAttrToStyleObject() {
       const styleObject = {};
       const titleStyleObject = {};
       const innerCardStyleObject = {};
@@ -605,7 +606,7 @@ export default {
       const tableIconStyleObject = {};
       const selectStyleObject = {};
 
-      const scale = this.getScale(pageSize.width);
+      const scale = this.getScale(this.pageSizeWidth);
       styleObject['--i-pieChart-scale'] = scale;
 
       if (this.propData.bgSize && this.propData.bgSize == 'custom') {
