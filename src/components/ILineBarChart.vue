@@ -224,7 +224,7 @@ export default {
           // },
           axisLabel: {
             interval: 0,
-            width: this.propData.axisLabelWidth,
+            width: scale * this.propData.axisLabelWidth,
             overflow: 'break',
             rotate: this.propData.isXRotate ? 30 : 0,
             fontSize: scale * (this.propData.xAxisLabelFontSize || 12),
