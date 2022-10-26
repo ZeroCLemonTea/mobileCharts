@@ -180,7 +180,7 @@ export default {
           break;
         case 'pageResize':
           this.convertAttrToStyleObject(messageObject.message);
-          this.drawChart();
+          this.drawChart(messageObject.message);
           this.$nextTick(() => {
             this.chart.resize();
           });
@@ -204,8 +204,9 @@ export default {
       const width = this.moduleObject.env === 'production' ? window.innerWidth : pageWidth || 414;
       return ((width / base - 1) * (ratio - 1) + 1) * fontSizeRatio;
     },
-    drawChart() {
+    drawChart(pageSize = {}) {
       this.chart.clear();
+      const scale = this.getScale(pageSize.width)
       const nameList = this.getExpressData('data', this.propData.nameField, this.chartData);
       const xAxis = [
         {
@@ -224,7 +225,7 @@ export default {
             width: this.propData.axisLabelWidth,
             overflow: 'break',
             rotate: this.propData.isXRotate ? 30 : 0,
-            fontSize: this.getScale() * (this.propData.xAxisLabelFontSize || 12),
+            fontSize: scale * (this.propData.xAxisLabelFontSize || 12),
             color:
               this.propData.xAxisLabelFontColor && this.propData.xAxisLabelFontColor.hex8
                 ? this.propData.xAxisLabelFontColor.hex8
@@ -244,7 +245,7 @@ export default {
         //     show: false
         //   },
         //   axisLabel: {
-        //     fontSize: this.getScale() * (this.propData.extraXAxisLabelFontSize || 12),
+        //     fontSize: scale * (this.propData.extraXAxisLabelFontSize || 12),
         //     color:
         //       this.propData.extraXAxisLabelFontColor && this.propData.extraXAxisLabelFontColor.hex8
         //         ? this.propData.extraXAxisLabelFontColor.hex8
@@ -264,7 +265,7 @@ export default {
           },
           axisLabel: {
             formatter: this.propData.yAxisUnit ? `{value} ${this.propData.yAxisUnit}` : '{value}',
-            fontSize: this.getScale() * (this.propData.yAxisLabelFontSize || 12),
+            fontSize: scale * (this.propData.yAxisLabelFontSize || 12),
             color:
               this.propData.yAxisLabelFontColor && this.propData.yAxisLabelFontColor.hex8
                 ? this.propData.yAxisLabelFontColor.hex8
@@ -282,7 +283,7 @@ export default {
           },
           axisLabel: {
             formatter: this.propData.minorYAxisUnit ? `{value} ${this.propData.minorYAxisUnit}` : '{value}',
-            fontSize: this.getScale() * (this.propData.yAxisLabelFontSize || 12),
+            fontSize: scale * (this.propData.yAxisLabelFontSize || 12),
             color:
               this.propData.yAxisLabelFontColor && this.propData.yAxisLabelFontColor.hex8
                 ? this.propData.yAxisLabelFontColor.hex8
@@ -294,13 +295,13 @@ export default {
         legend: {
           show: this.propData.showLegend,
           left: this.propData.legendXPosition,
-          top: this.propData.legendYPosition == 'top' ? this.propData.chartTitle ? this.getScale() * ((this.propData.chartTitleFontSize || 16) + 4) : 'top' : 'bottom',
+          top: this.propData.legendYPosition == 'top' ? this.propData.chartTitle ? scale * ((this.propData.chartTitleFontSize || 16) * 1.4) : 'top' : 'bottom',
           textStyle: {
             color:
               this.propData.legendFontColor && this.propData.legendFontColor.hex8
                 ? this.propData.legendFontColor.hex8
                 : '#666666',
-            fontSize: this.getScale() * (this.propData.legendFontSize || 14)
+            fontSize: scale * (this.propData.legendFontSize || 14)
           }
         },
         title: {
@@ -313,7 +314,7 @@ export default {
               this.propData.chartTitleFontColor && this.propData.chartTitleFontColor.hex8
                 ? this.propData.chartTitleFontColor.hex8
                 : '#666666',
-            fontSize: this.getScale() * (this.propData.chartTitleFontSize || 16),
+            fontSize: scale * (this.propData.chartTitleFontSize || 16),
             fontWeight: this.propData.chartTitleFontWeight || 'bolder'
           }
         },
@@ -330,16 +331,16 @@ export default {
         series: this.propData.seriesSet && this.propData.seriesSet.length > 0 ?
         this.propData.seriesSet.map(item => {
           if(item.type === 'bar') {
-            return this.getBarSeries(item)
+            return this.getBarSeries(item, scale)
           } else if (item.type === 'line') {
-            return this.getLineSeries(item)
+            return this.getLineSeries(item, scale)
           }
         }) : []
       };
       console.log(option)
       this.chart.setOption(option);
     },
-    getBarSeries(propData){
+    getBarSeries(propData, scale){
       const valueList = this.getExpressData('data', propData.dataFiled, this.chartData);
       const colorList =
         propData.colorGrad
@@ -365,7 +366,7 @@ export default {
         label: {
           show: propData.showLabel,
           position: propData.position == 'inside' ? this.propData.chartLayout == 'vertical' ? 'insideTop' : 'insideRight' : this.propData.chartLayout == 'vertical' ? 'top' : 'right',
-          fontSize: this.getScale() * (propData.chartLabelFontSize || 12),
+          fontSize: scale * (propData.chartLabelFontSize || 12),
           color:
             propData.chartLabelFontColor && propData.chartLabelFontColor.hex8
               ? propData.chartLabelFontColor.hex8
@@ -383,7 +384,7 @@ export default {
         data: valueList
       }
     },
-    getLineSeries(propData){
+    getLineSeries(propData, scale){
       const valueList = this.getExpressData('data', propData.dataFiled, this.chartData);
       const colorList =
         propData.colorGrad
@@ -411,7 +412,7 @@ export default {
         label: {
           show: propData.showLabel,
           position: propData.position == 'inside' ? this.propData.chartLayout == 'vertical' ? 'insideTop' : 'insideRight' : this.propData.chartLayout == 'vertical' ? 'top' : 'right',
-          fontSize: this.getScale() * (propData.chartLabelFontSize || 12),
+          fontSize: scale * (propData.chartLabelFontSize || 12),
           color:
             propData.chartLabelFontColor && propData.chartLabelFontColor.hex8
               ? propData.chartLabelFontColor.hex8

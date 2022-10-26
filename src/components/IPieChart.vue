@@ -296,7 +296,7 @@ export default {
           break;
         case 'pageResize':
           this.convertAttrToStyleObject(messageObject.message);
-          this.drawChart();
+          this.drawChart(messageObject.message);
           this.$nextTick(() => {
             this.chart.resize();
           });
@@ -348,7 +348,9 @@ export default {
       console.log(this.getExpressData('data', this.propData.labelField, data))
       return this.getExpressData('data', this.propData.labelField, data)
     },
-    drawChart() {
+    drawChart(pageSize = {}) {
+      this.chart.clear();
+      const scale = this.getScale(pageSize.width)
       const legendData = this.chartData?.map(item => item.name);
       const option = {
         color: this.colors,
@@ -366,7 +368,7 @@ export default {
               this.propData.legendFontColor && this.propData.legendFontColor.hex8
                 ? this.propData.legendFontColor.hex8
                 : '#666666',
-            fontSize: this.getScale() * (this.propData.legendFontSize || 14)
+            fontSize: scale * (this.propData.legendFontSize || 14)
           }
         },
         title: {
@@ -379,7 +381,7 @@ export default {
               this.propData.chartTitleFontColor && this.propData.chartTitleFontColor.hex8
                 ? this.propData.chartTitleFontColor.hex8
                 : '#666666',
-            fontSize: this.getScale() * (this.propData.chartTitleFontSize || 16),
+            fontSize: scale * (this.propData.chartTitleFontSize || 16),
             fontWeight: this.propData.chartTitleFontWeight || 'bolder'
           }
         },
@@ -398,7 +400,7 @@ export default {
               formatter: this.labelFormatter,
               rich: {
                 value: {
-                  fontSize: this.getScale() * (this.propData.chartLabelFontSize || 12),
+                  fontSize: scale * (this.propData.chartLabelFontSize || 12),
                   color:
                     this.propData.chartLabelFontColor && this.propData.chartLabelFontColor.hex8
                       ? this.propData.chartLabelFontColor.hex8
