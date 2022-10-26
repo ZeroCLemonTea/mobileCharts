@@ -89,13 +89,17 @@ export default {
         // isShowTitleBar: false,
         // chartTitle: '标题',
         // // colorList: [{ offset: 0, color: {hex8: '#83bff6'} }],
-        // gridTop: 45,
+        // gridTop: 65,
+        // axisLabelWidth: '40',
         // chartLayout: 'vertical',
         // nameField: 'nameList',
         // minorYAxisUnit: 'ml',
         // yAxisUnit: 'kg',
         // showLegend: true,
-        // boundaryGap: false,
+        // boundaryGap: true,
+        // legendXPosition: 'center',
+        // legendYPosition: 'top',
+        // gridBottom: 40,
         // seriesSet: [{
         //   type: 'bar',
         //   dataFiled: 'barValueList',
@@ -176,12 +180,14 @@ export default {
           break;
         case 'pageResize':
           this.convertAttrToStyleObject(messageObject.message);
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });
           break;
         case 'userCustomFontSizeRatio':
           this.convertAttrToStyleObject();
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });
@@ -215,7 +221,7 @@ export default {
           // },
           axisLabel: {
             interval: 0,
-            width: 100,
+            width: this.propData.axisLabelWidth,
             overflow: 'break',
             rotate: this.propData.isXRotate ? 30 : 0,
             fontSize: this.getScale() * (this.propData.xAxisLabelFontSize || 12),
@@ -287,7 +293,8 @@ export default {
       const option = {
         legend: {
           show: this.propData.showLegend,
-          left: this.propData.legendPosition,
+          left: this.propData.legendXPosition,
+          top: this.propData.legendYPosition == 'top' ? this.propData.chartTitle ? this.getScale() * ((this.propData.chartTitleFontSize || 16) + 4) : 'top' : 'bottom',
           textStyle: {
             color:
               this.propData.legendFontColor && this.propData.legendFontColor.hex8

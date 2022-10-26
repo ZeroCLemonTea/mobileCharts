@@ -296,12 +296,14 @@ export default {
           break;
         case 'pageResize':
           this.convertAttrToStyleObject(messageObject.message);
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });
           break;
         case 'userCustomFontSizeRatio':
           this.convertAttrToStyleObject();
+          this.drawChart();
           this.$nextTick(() => {
             this.chart.resize();
           });

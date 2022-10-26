@@ -167,7 +167,7 @@
               "type": "input",
               "layoutType": "inline",
               "text": "堆叠标识",
-              "desc": "如果想要堆叠效果的柱状图，请维护同一个堆叠标识",
+              "desc": "如果想要堆叠效果的柱状图，请维护同一个堆叠标识，如a、1等",
               "bindKey": "stack",
               "default": ""
             },
@@ -285,6 +285,14 @@
           "default": true
         },
         {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "刻度宽度",
+          "bindKey": "axisLabelWidth",
+          "desc": "X轴上的所有刻度标签的宽度，请填写数字",
+          "default": "40"
+        },
+        {
           "type": "switch",
           "layoutType": "inline",
           "text": "刻度倾斜",
@@ -311,14 +319,15 @@
           "layoutType": "inline",
           "text": "显示图例",
           "bindKey": "showLegend",
-          "desc": "会在图表右上方显示",
+          "desc": "显示图表上不同柱条或折线的名称图例",
           "default": true
         },
         {
           "type": "radio",
           "layoutType": "inline",
-          "text": "图例位置",
-          "bindKey": "legendPosition",
+          "text": "水平位置",
+          "desc": "调整图例的水平位置",
+          "bindKey": "legendXPosition",
           "default": "right",
           "display": "@[showLegend]",
           "dictionary": [
@@ -333,6 +342,25 @@
             {
               "label": "右",
               "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "radio",
+          "layoutType": "inline",
+          "text": "竖直位置",
+          "desc": "调整图例的竖直位置",
+          "bindKey": "legendYPosition",
+          "default": "top",
+          "display": "@[showLegend]",
+          "dictionary": [
+            {
+              "label": "上",
+              "value": "top"
+            },
+            {
+              "label": "下",
+              "value": "bottom"
             }
           ]
         },
