@@ -510,7 +510,7 @@ export default {
         IDM.datasource.request(this.propData.columnsDataSource[0]?.id, {
           moduleObject: this.moduleObject,
         }, (res) => {
-          if (res.code == 200 || res.type == 'success') {
+          if (res.type == 'success') {
             const resultData = this.customFormat(this.propData.columnsCustomFunction, res.data);
             this.columns = resultData;
             const pickerSelect = this.columns.find(item => item.isDefault);
@@ -547,7 +547,7 @@ export default {
         }
       }, (res) => {
         this.isLoading = false;
-        if (res.code == 200 || res.type == 'success') {
+        if (res.type == 'success') {
           const resultData = this.customFormat(this.propData.chartDataCustomFunction, res.data);
           this.chartData = resultData;
           this.drawChart();

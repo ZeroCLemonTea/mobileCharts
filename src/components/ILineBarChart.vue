@@ -511,7 +511,7 @@ export default {
         moduleObject: this.moduleObject,
       }, (res) => {
         this.isLoading = false;
-        if (res.code == 200 || res.type == 'success') {
+        if (res.type == 'success') {
           const resultData = this.customFormat(this.propData.chartDataCustomFunction, res.data);
           this.chartData = resultData;
           this.drawChart();
