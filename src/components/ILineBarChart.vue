@@ -506,41 +506,22 @@ export default {
       ) {
         return false;
       }
-      const url = `ctrl/dataSource/getDatas`;
-      // const urlObject = IDM.url.queryObject();
-      // const routerParams = this.moduleObject.routerId
-      //   ? IDM.router.getParam(this.moduleObject.routerId)
-      //   : {};
       this.isLoading = true;
-      IDM.http
-        .post(
-          url,
-          {
-            // ...urlObject,
-            // ...routerParams,
-            id: this.propData.chartDataSource && this.propData.chartDataSource[0]?.id
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json;charset=UTF-8'
-            }
-          }
-        )
-        .done(res => {
-          this.isLoading = false;
-          if (res.type === 'success') {
-            const resultData = this.customFormat(this.propData.chartDataCustomFunction, res.data);
-            this.chartData = resultData;
-            this.drawChart();
-            this.$nextTick(() => {
-              this.chart.resize();
-            });
-          }
-        })
-        .error(err => {
-          console.log(err);
-          this.isLoading = false;
-        });
+      IDM.datasource.request(this.propData.chartDataSource[0]?.id, {
+        moduleObject: this.moduleObject,
+      }, (res) => {
+        this.isLoading = false;
+        if (res.code == 200 || res.type == 'success') {
+          const resultData = this.customFormat(this.propData.chartDataCustomFunction, res.data);
+          this.chartData = resultData;
+          this.drawChart();
+          this.$nextTick(() => {
+            this.chart.resize();
+          });
+        }
+      }, (err) => {
+        this.isLoading = false;
+      })
     },
     /**
      * 把属性转换成样式对象
