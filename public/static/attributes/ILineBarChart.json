@@ -178,7 +178,7 @@
               "type": "switch",
               "layoutType": "inline",
               "text": "颜色渐变",
-              "desc": "显示数值标签，用来展示具体的值",
+              "desc": "是否启用颜色渐变，需要维护俩个颜色，此模式下需要维护俩个颜色",
               "bindKey": "colorGrad",
               "default": false
             },
@@ -192,14 +192,14 @@
             {
               "type": "colorPicker",
               "layoutType": "inline",
-              "text": "填充色1",
+              "text": "起点颜色",
               "bindKey": "fitColor1",
               "display": "@[colorGrad]"
             },
             {
               "type": "colorPicker",
               "layoutType": "inline",
-              "text": "填充色2",
+              "text": "终点颜色",
               "bindKey": "fitColor2",
               "display": "@[colorGrad]"
             },

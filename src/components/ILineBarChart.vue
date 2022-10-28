@@ -415,7 +415,7 @@ export default {
         },
         label: {
           show: propData.showLabel,
-          position: propData.position == 'inside' ? this.propData.chartLayout == 'vertical' ? 'insideTop' : 'insideRight' : this.propData.chartLayout == 'vertical' ? 'top' : 'right',
+          position: propData.position == 'inside' ? 'inside' : this.propData.chartLayout == 'vertical' ? 'top' : 'right',
           fontSize: scale * (propData.chartLabelFontSize || 12),
           color:
             propData.chartLabelFontColor && propData.chartLabelFontColor.hex8
