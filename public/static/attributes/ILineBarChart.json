@@ -87,12 +87,15 @@
               "default": ""
             },
             {
-              "type": "input",
+              "type": "dataSourceFiledSelect",
               "layoutType": "inline",
               "text": "取值字段",
               "desc": "在数据源返回的对象中的取值字段",
               "bindKey": "dataFiled",
-              "default": "barValueList"
+              "default": "barValueList",
+              "ctrlAttrObject": {
+                "dataSourceBindkey": "chartDataSource"
+              }
             },
             {
               "type": "switch",

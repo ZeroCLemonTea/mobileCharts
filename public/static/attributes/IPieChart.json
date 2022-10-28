@@ -165,12 +165,15 @@
           "default": false
         },
         {
-          "type": "input",
+          "type": "dataSourceFiledSelect",
           "layoutType": "inline",
           "text": "标签取值",
           "bindKey": "labelField",
           "desc": "为空不显示标签，请填写取值字段",
-          "default": "value"
+          "default": "value",
+          "ctrlAttrObject": {
+            "dataSourceBindkey": "chartDataSource"
+          }
         },
         {
           "type": "radio",
@@ -251,12 +254,15 @@
           "display": "@[colorType=='static']"
         },
         {
-          "type": "input",
+          "type": "dataSourceFiledSelect",
           "layoutType": "inline",
           "text": "颜色字段",
           "desc": "可根据数据里的某字段控制图表颜色",
           "bindKey": "chartColorField",
-          "display": "@[colorType=='field']"
+          "display": "@[colorType=='field']",
+          "ctrlAttrObject": {
+            "dataSourceBindkey": "chartDataSource"
+          }
         },
         {
           "type": "group",
@@ -370,11 +376,14 @@
           "tabText": "字段[index]",
           "children": [
             {
-              "type": "input",
+              "type": "dataSourceFiledSelect",
               "layoutType": "inline",
               "text": "取值字段",
               "desc": "设置此字段的取值",
-              "bindKey": "name"
+              "bindKey": "name",
+              "ctrlAttrObject": {
+                "dataSourceBindkey": "chartDataSource"
+              }
             },
             {
               "type": "select",
