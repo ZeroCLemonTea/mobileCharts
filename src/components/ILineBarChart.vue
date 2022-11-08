@@ -509,10 +509,10 @@ export default {
       this.isLoading = true;
       IDM.datasource.request(this.propData.chartDataSource[0]?.id, {
         moduleObject: this.moduleObject,
-      }, (res) => {
+      }, (data) => {
         this.isLoading = false;
-        if (res.type == 'success') {
-          const resultData = this.customFormat(this.propData.chartDataCustomFunction, res.data);
+        if (data) {
+          const resultData = this.customFormat(this.propData.chartDataCustomFunction, data);
           this.chartData = resultData;
           this.drawChart();
           this.$nextTick(() => {
