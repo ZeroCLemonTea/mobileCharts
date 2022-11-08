@@ -428,6 +428,7 @@
           "type": "inputNumber",
           "layoutType": "inline",
           "text": "图标大小",
+          "desc": "表格前有类似图例的图标",
           "bindKey": "tableIconSize",
           "default": 14
         },
