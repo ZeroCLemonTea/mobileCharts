@@ -216,7 +216,7 @@
               "layoutType": "inline",
               "text": "标签位置",
               "bindKey": "position",
-              "desc": "用于选择不同类型的图表样式，对应维护不同属性",
+              "desc": "标签会在外部的边缘显示，或在内部中间显示",
               "dictionary": [
                 {
                   "label": "外部",
@@ -258,15 +258,15 @@
         {
           "type": "radio",
           "layoutType": "inline",
-          "text": "柱状方向",
+          "text": "排布方向",
           "bindKey": "chartLayout",
           "dictionary": [
             {
-              "label": "竖直",
+              "label": "水平",
               "value": "vertical"
             },
             {
-              "label": "水平",
+              "label": "竖直",
               "value": "horizontal"
             }
           ],
@@ -576,14 +576,6 @@
             "fontSizeUnit": "px",
             "fontWeight": "600"
           }
-        },
-        {
-          "type": "font",
-          "layoutType": "block",
-          "text": "下拉文字",
-          "desc": "下拉文字样式设置",
-          "bindKey": "selectFont",
-          "display": "@[isShowTitleBar&&columnsType!='none']"
         }
       ]
     },

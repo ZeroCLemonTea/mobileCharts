@@ -260,6 +260,7 @@ mobileCharts@1.0.0
   "resultData": "原始数据",
   "moduleObject":"组件信息"
 }
+```
 #### 下拉自定义函数【columnsCustomFunction】
 用于格式化数据源返回的数据，参数为
 ```json
